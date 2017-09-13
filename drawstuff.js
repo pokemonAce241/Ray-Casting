@@ -108,6 +108,23 @@ class Vector {
             return(new Vector(NaN,NaN,NaN));
         }
     } // end add static method
+    
+    
+    // static divide method
+    static divide(v1,v2) {
+        try {
+            if (!(v1 instanceof Vector) || !(v2 instanceof Vector))
+                throw "Vector.add: non-vector parameter";
+            else
+                return(new Vector(Math.round(v1.x/v2.x),Math.round(v1.y/v2.y),Math.round(v1.z/v2.z)));
+        } // end try
+        
+        catch(e) {
+            console.log(e);
+            return(new Vector(NaN,NaN,NaN));
+        }
+    } // end  static method
+    
 
     // static subtract method, v1-v2
     static subtract(v1,v2) {
@@ -163,6 +180,26 @@ class Vector {
 
 
 /* utility functions */
+
+// returns the  upper value from the quadratic formula
+function positiveQuadratic(a,b,c) {
+ var quad = 1/(2*a);
+    quad = quad * (-b + (Math.sqrt((Math.pow(b,2)) - (4*a*c))));
+ return quad;
+}
+
+// returns the  lower value from the quadratic formula
+function negativeQuadratic(a,b,c) {
+ var quad = 1/(2*a);
+    quad = quad*(-b-(Math.sqrt((Math.pow(b,2))-(4*a*c))));
+ return quad;
+}
+
+//returns the discriminant
+function discriminant(a,b,c) {
+ var dis = ((Math.pow(b,2))-(4*a*c);
+ return dis;
+}
 
 // draw a pixel at x,y using color
 function drawPixel(imagedata,x,y,color) {
