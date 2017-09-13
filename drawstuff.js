@@ -283,6 +283,9 @@ function drawRandPixelsInInputEllipsoids(context) {
         var numEllipsoidPixels = 0; // init num pixels in ellipsoid
         var c = new Color(0,0,0,0); // init the ellipsoid color
         var n = inputEllipsoids.length; // the number of input ellipsoids
+        var eye = new Vector(0.5,0.5,0.5); //eye location
+        var lightPos = new Vector(-1,3,-0.5); //light location
+        var lightCol = new Vector(1,1,1); //light color
         //console.log("number of ellipses: " + n);
 
         // Loop over the ellipsoids, draw rand pixels in each
@@ -329,6 +332,7 @@ function drawInputEllipsoidsUsingArcs(context) {
         var w = context.canvas.width;
         var h = context.canvas.height;
         var n = inputEllipsoids.length; 
+        
         //console.log("number of ellipsoids: " + n);
 
         // Loop over the ellipsoids, draw each in 2d
