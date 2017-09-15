@@ -248,7 +248,6 @@ function drawRandPixelsInInputEllipsoids(context) {
     var inputEllipsoids = getInputEllipsoids();
     var w = context.canvas.width;
     var h = context.canvas.height;
-    var distance = 0.5;
     var imagedata = context.createImageData(w,h);
     const PIXEL_DENSITY = 0.05;
     var numCanvasPixels = (w*h)*PIXEL_DENSITY;
@@ -272,17 +271,17 @@ function drawRandPixelsInInputEllipsoids(context) {
 
         // Loop over the ellipsoids, draw rand pixels in each
         for (var e=0; e<n; e++) {
-            cx = w*inputEllipsoids[e].x; // ellipsoid center x
-            cy = h*inputEllipsoids[e].y; // ellipsoid center y
-            cz = distance*inputEllipsoids[e].z;// ellipsoid center z
-            ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a); // x radius
-            ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b); // y radius
-            ellipsoidZRadius = Math.round(distance*inputEllipsoids[e].c); //z radius
+            cx = inputEllipsoids[e].x; // ellipsoid center x
+            cy = inputEllipsoids[e].y; // ellipsoid center y
+            cz = inputEllipsoids[e].z;// ellipsoid center z
+            ellipsoidXRadius = inputEllipsoids[e].a; // x radius
+            ellipsoidYRadius = inputEllipsoids[e].b; // y radius
+            ellipsoidZRadius = inputEllipsoids[e].c; //z radius
             console.log("ellipsoid x radius: "+ellipsoidXRadius);
             console.log("ellipsoid y radius: "+ellipsoidYRadius);
             
             var center = new Vector(cx,cy,cz);
-            var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
+            var axis = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
            
             c.change(
                 inputEllipsoids[e].diffuse[0]*255,
@@ -314,10 +313,11 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   
 				   var D = new Vector();
 				   D = Vector.subtract(pixel,eye);
+			           D = Vector.normalize(D);
 				   var DdivA = new Vector();
-				   DdivA = Vector.divide(D,radius);
+				   DdivA = Vector.divide(D,axis);
 				   var EminC = Vector.subtract(eye,center);
-                   var EminCdivA = Vector.divide(EminC,radius);
+                   		   var EminCdivA = Vector.divide(EminC,axis);
 				   var a = Vector.dot(DdivA,DdivA);
 				   var b = Vector.dot(DdivA,EminCdivA);
 				   var b = b*2
