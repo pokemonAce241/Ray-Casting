@@ -203,53 +203,14 @@ function drawPixel(imagedata,x,y,color) {
     }
 } // end drawPixel
     
-// draw random pixels
-function drawRandPixels(context) {
-    var c = new Color(0,0,0,0); // the color at the pixel: black
-    var w = context.canvas.width;
-    var h = context.canvas.height;
-    var imagedata = context.createImageData(w,h);
-    const PIXEL_DENSITY = 0.01;
-    var numPixels = (w*h)*PIXEL_DENSITY; 
-    
-    // Loop over 1% of the pixels in the image
-    for (var x=0; x<numPixels; x++) {
-        c.change(Math.random()*255,Math.random()*255,
-            Math.random()*255,255); // rand color
-        drawPixel(imagedata,
-            Math.floor(Math.random()*w),
-            Math.floor(Math.random()*h),
-                c);
-    } // end for x
-    context.putImageData(imagedata, 0, 0);
-} // end draw random pixels
 
-// get the input ellipsoids from the standard class URL
-function getInputEllipsoids() {
-    const INPUT_ELLIPSOIDS_URL = 
-        "https://ncsucgclass.github.io/prog1/ellipsoids.json";
-        
-    // load the ellipsoids file
-    var httpReq = new XMLHttpRequest(); // a new http request
-    httpReq.open("GET",INPUT_ELLIPSOIDS_URL,false); // init the request
-    httpReq.send(null); // send the request
-    var startTime = Date.now();
-    while ((httpReq.status !== 200) && (httpReq.readyState !== XMLHttpRequest.DONE)) {
-        if ((Date.now()-startTime) > 3000)
-            break;
-    } // until its loaded or we time out after three seconds
-    if ((httpReq.status !== 200) || (httpReq.readyState !== XMLHttpRequest.DONE)) {
-        console.log*("Unable to open input ellipses file!");
-        return String.null;
-    } else
-        return JSON.parse(httpReq.response); 
-} // end get input ellipsoids
 
 // put random points in the ellipsoids from the class github
 function drawRandPixelsInInputEllipsoids(context) {
     var inputEllipsoids = getInputEllipsoids();
     var w = context.canvas.width;
     var h = context.canvas.height;
+    var distance = 0.5;
     var imagedata = context.createImageData(w,h);
     const PIXEL_DENSITY = 0.05;
     var numCanvasPixels = (w*h)*PIXEL_DENSITY; 
