@@ -40,162 +40,8 @@ class Color {
     } // end Color change method
 } // end color class
 
-// Vector class, base code from exercise 3
-class Vector { 
-    constructor(x=0,y=0,z=0) {
-        this.set(x,y,z);
-    } // end constructor
-    
-    // sets the components of a vector
-    set(x,y,z) {
-        try {
-            if ((typeof(x) !== "number") || (typeof(y) !== "number") || (typeof(z) !== "number"))
-                throw "vector component not a number";
-            else
-                this.x = x; this.y = y; this.z = z; 
-        } // end try
-        
-        catch(e) {
-            console.log(e);
-        }
-    } // end vector set
-    
-    // copy the passed vector into this one
-    copy(v) {
-        try {
-            if (!(v instanceof Vector))
-                throw "Vector.copy: non-vector parameter";
-            else
-                this.x = v.x; this.y = v.y; this.z = v.z;
-        } // end try
-        
-        catch(e) {
-            console.log(e);
-        }
-    }
-    
-    toConsole(prefix) {
-        console.log(prefix+"["+this.x+","+this.y+","+this.z+"]");
-    } // end to console
-    
-    // static dot method
-    static dot(v1,v2) {
-        try {
-            if (!(v1 instanceof Vector) || !(v2 instanceof Vector))
-                throw "Vector.dot: non-vector parameter";
-            else
-                return(v1.x*v2.x + v1.y*v2.y + v1.z*v2.z);
-        } // end try
-        
-        catch(e) {
-            console.log(e);
-            return(NaN);
-        }
-    } // end dot static method
-    
-    // static add method
-    static add(v1,v2) {
-        try {
-            if (!(v1 instanceof Vector) || !(v2 instanceof Vector))
-                throw "Vector.add: non-vector parameter";
-            else
-                return(new Vector(v1.x+v2.x,v1.y+v2.y,v1.z+v2.z));
-        } // end try
-        
-        catch(e) {
-            console.log(e);
-            return(new Vector(NaN,NaN,NaN));
-        }
-    } // end add static method
-    
-    
-    // static divide method
-    static divide(v1,v2) {
-        try {
-            if (!(v1 instanceof Vector) || !(v2 instanceof Vector))
-                throw "Vector.add: non-vector parameter";
-            else
-                return(new Vector(Math.round(v1.x/v2.x),Math.round(v1.y/v2.y),Math.round(v1.z/v2.z)));
-        } // end try
-        
-        catch(e) {
-            console.log(e);
-            return(new Vector(NaN,NaN,NaN));
-        }
-    } // end  static method
-    
-
-    // static subtract method, v1-v2
-    static subtract(v1,v2) {
-        try {
-            if (!(v1 instanceof Vector) || !(v2 instanceof Vector))
-                throw "Vector.subtract: non-vector parameter";
-            else {
-                var v = new Vector(v1.x-v2.x,v1.y-v2.y,v1.z-v2.z);
-                //v.toConsole("Vector.subtract: ");
-                return(v);
-            }
-        } // end try
-        
-        catch(e) {
-            console.log(e);
-            return(new Vector(NaN,NaN,NaN));
-        }
-    } // end subtract static method
-
-    // static scale method
-    static scale(c,v) {
-        try {
-            if (!(typeof(c) === "number") || !(v instanceof Vector))
-                throw "Vector.scale: malformed parameter";
-            else
-                return(new Vector(c*v.x,c*v.y,c*v.z));
-        } // end try
-        
-        catch(e) {
-            console.log(e);
-            return(new Vector(NaN,NaN,NaN));
-        }
-    } // end scale static method
-    
-    // static normalize method
-    static normalize(v) {
-        try {
-            if (!(v instanceof Vector))
-                throw "Vector.normalize: parameter not a vector";
-            else {
-                var lenDenom = 1/Math.sqrt(Vector.dot(v,v));
-                return(Vector.scale(lenDenom,v));
-            }
-        } // end try
-        
-        catch(e) {
-            console.log(e);
-            return(new Vector(NaN,NaN,NaN));
-        }
-    } // end scale static method
-    
-} // end Vector class
 
 /* utility functions */
-
-// returns the  upper value from the quadratic formula
-function positiveQuadratic(a,b,c) {
- 
-    return(1/(2*a)) * (-b + (Math.sqrt((Math.pow(b,2)) - (4*a*c))));
- 
-}
-
-// returns the  lower value from the quadratic formula
-function negativeQuadratic(a,b,c) {
- return(1/(2*a)) * (-b - (Math.sqrt((Math.pow(b,2)) - (4*a*c))));
-}
-
-//returns the discriminant
-function discriminant(a,b,c) {
- return((Math.pow(b,2))-(4*a*c);
-
-}
 
 // draw a pixel at x,y using color
 function drawPixel(imagedata,x,y,color) {
@@ -268,18 +114,16 @@ function drawRandPixelsInInputEllipsoids(context) {
     var h = context.canvas.height;
     var imagedata = context.createImageData(w,h);
     const PIXEL_DENSITY = 0.05;
-    var numCanvasPixels = (w*h)*PIXEL_DENSITY;
-     
+    var numCanvasPixels = (w*h)*PIXEL_DENSITY; 
     
     if (inputEllipsoids != String.null) { 
-        var x = 0; var y = 0;  // pixel coord init
-        var cx = 0; var cy = 0; // init center x,y, and z coord
+        var x = 0; var y = 0; // pixel coord init
+        var cx = 0; var cy = 0; // init center x and y coord
         var ellipsoidXRadius = 0; // init ellipsoid x radius
         var ellipsoidYRadius = 0; // init ellipsoid y radius
         var numEllipsoidPixels = 0; // init num pixels in ellipsoid
         var c = new Color(0,0,0,0); // init the ellipsoid color
         var n = inputEllipsoids.length; // the number of input ellipsoids
-        
         //console.log("number of ellipses: " + n);
 
         // Loop over the ellipsoids, draw rand pixels in each
@@ -363,10 +207,10 @@ function main() {
     //drawRandPixels(context);
       // shows how to draw pixels
     
-    drawRandPixelsInInputEllipsoids(context);
+    //drawRandPixelsInInputEllipsoids(context);
       // shows how to draw pixels and read input file
       
-    //drawInputEllipsoidsUsingArcs(context);
+    drawInputEllipsoidsUsingArcs(context);
       // shows how to read input file, but not how to draw pixels
 }
 
