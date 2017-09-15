@@ -180,6 +180,24 @@ class Vector {
 
 /* utility functions */
 
+// returns the  upper value from the quadratic formula
+function positiveQuadratic(a,b,c) {
+ 
+    return(1/(2*a)) * (-b + (Math.sqrt((Math.pow(b,2)) - (4*a*c))));
+ 
+}
+
+// returns the  lower value from the quadratic formula
+function negativeQuadratic(a,b,c) {
+ return(1/(2*a)) * (-b - (Math.sqrt((Math.pow(b,2)) - (4*a*c))));
+}
+
+//returns the discriminant
+function discriminant(a,b,c) {
+ return((Math.pow(b,2))-(4*a*c);
+
+}
+
 // draw a pixel at x,y using color
 function drawPixel(imagedata,x,y,color) {
     try {
