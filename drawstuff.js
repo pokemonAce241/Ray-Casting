@@ -267,7 +267,6 @@ function drawRandPixelsInInputEllipsoids(context) {
     var inputEllipsoids = getInputEllipsoids();
     var w = context.canvas.width;
     var h = context.canvas.height;
-    var d = 0.5;
     var imagedata = context.createImageData(w,h);
     const PIXEL_DENSITY = 0.05;
     var numCanvasPixels = (w*h)*PIXEL_DENSITY; 
