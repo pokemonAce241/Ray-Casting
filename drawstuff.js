@@ -290,10 +290,43 @@ function drawRandPixelsInInputEllipsoids(context) {
                 255); // ellipsoid diffuse color
             for (var x=0; x<w; x++) {
                 for(var y=0;y<h;y++){
-                   
+                
+			var t = x/w;
+			
+				   var s = y/h;
+			
+				   var PLZ = UL.z +(s*(LL.z-UL.z));
+			
+				   var PRZ = UR.z + (s*(LR.z-UR.z));
+			
+				   var Pz = PLZ + (t*(PRZ-PLZ));
+			
 				   
-				  
-					drawPixel(imagedata,x,y,c);
+				   var PLX = UL.x +(s*(LL.x-UL.x));
+				   var PRX = UR.x + (s*(LR.x-UR.x));
+				   var Px = PLX + (t*(PRX-PLX));
+				   
+				   var PLY = UL.y +(s*(LL.y-UL.y));
+				   var PRY = UR.y + (s*(LR.y-UR.y));
+				   var Py = PLY + (t*(PRY-PLY));
+				   
+				   var pixel = new Vector(Px,Py,Pz);
+				   
+				   var D = new Vector();
+				   D = Vector.subtract(pixel,eye);
+			           D = Vector.normalize(D);
+				   var DdivA = new Vector();
+				   DdivA = Vector.divide(D,axis);
+				   var EminC = Vector.subtract(eye,center);
+                   		   var EminCdivA = Vector.divide(EminC,axis);
+				   var a = Vector.dot(DdivA,DdivA);
+				   var b = Vector.dot(DdivA,EminCdivA);
+				   var b = b*2
+				   var c = Vector.dot(EminCdivA,EminCdivA);
+				   var c = c-1;
+				   
+				   var div = discriminant(a,b,c);
+		drawPixel(imagedata,x,y,c);
 				   
                 }
                 } // end for pixels in ellipsoid
