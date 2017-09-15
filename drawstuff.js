@@ -301,6 +301,13 @@ function drawRandPixelsInInputEllipsoids(context) {
             ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a); // x radius
             ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b); // y radius
             ellipsoidZRadius = Math.round(d*inputEllipsoids[e].c); //z radius
+            numEllipsoidPixels = inputEllipsoids[e].a*inputEllipsoids[e].b*Math.PI; // projected ellipsoid area
+            numEllipsoidPixels *= PIXEL_DENSITY * w * h; // percentage of ellipsoid area to render to pixels
+            numEllipsoidPixels = Math.round(numEllipsoidPixels);
+            console.log("ellipsoid x radius: "+ellipsoidXRadius);
+            console.log("ellipsoid y radius: "+ellipsoidYRadius);
+            console.log("num ellipsoid pixels: "+numEllipsoidPixels);
+
             
             var center = new Vector(cx,cy,cz);
             var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
@@ -310,18 +317,23 @@ function drawRandPixelsInInputEllipsoids(context) {
                 inputEllipsoids[e].diffuse[1]*255,
                 inputEllipsoids[e].diffuse[2]*255,
                 255); // ellipsoid diffuse color
-            for (var x=0; x<w; x++) {
-               for(var y=0; y<h;y++) {
-                   drawPixel(imagedata,x,y,c);
-                   
-                   
-                   
-               }
+            for (var p=0; p<numEllipsoidPixels; p++) {
+                do {
+                    x = Math.random()*2 - 1; // in unit square 
+                    y = Math.random()*2 - 1; // in unit square
+                } while (Math.sqrt(x*x + y*y) > 1) // a circle is also an ellipse
+                drawPixel(imagedata,
+                    cx+Math.round(x*ellipsoidXRadius),
+                    cy+Math.round(y*ellipsoidYRadius),c);
+                //console.log("color: ("+c.r+","+c.g+","+c.b+")");
+                //console.log("x: "+Math.round(w*inputEllipsoids[e].x));
+                //console.log("y: "+Math.round(h*inputEllipsoids[e].y));
             } // end for pixels in ellipsoid
         } // end for ellipsoids
         context.putImageData(imagedata, 0, 0);
     } // end if ellipsoids found
 } // end draw rand pixels in input ellipsoids
+
 
 // draw 2d projections read from the JSON file at class github
 function drawInputEllipsoidsUsingArcs(context) {
