@@ -266,18 +266,16 @@ function drawRandPixelsInInputEllipsoids(context) {
     var inputEllipsoids = getInputEllipsoids();
     var w = context.canvas.width;
     var h = context.canvas.height;
-    var d = 0.5;
     var imagedata = context.createImageData(w,h);
     const PIXEL_DENSITY = 0.05;
     var numCanvasPixels = (w*h)*PIXEL_DENSITY;
      
     
     if (inputEllipsoids != String.null) { 
-        var x = 0; var y = 0; var z = 0; // pixel coord init
-        var cx = 0; var cy = 0; var cz = 0; // init center x,y, and z coord
+        var x = 0; var y = 0;  // pixel coord init
+        var cx = 0; var cy = 0; // init center x,y, and z coord
         var ellipsoidXRadius = 0; // init ellipsoid x radius
         var ellipsoidYRadius = 0; // init ellipsoid y radius
-        var ellipsoidZRadius = 0; // init ellipsoid z radius
         var numEllipsoidPixels = 0; // init num pixels in ellipsoid
         var c = new Color(0,0,0,0); // init the ellipsoid color
         var n = inputEllipsoids.length; // the number of input ellipsoids
