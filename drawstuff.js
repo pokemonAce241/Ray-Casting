@@ -179,27 +179,6 @@ class Vector {
 
 /* utility functions */
 
-
-// returns the  upper value from the quadratic formula
-function positiveQuadratic(a,b,c) {
- var quad = 1/(2*a);
-    quad = quad * (-b + (Math.sqrt((Math.pow(b,2)) - (4*a*c))));
- return quad;
-}
-
-// returns the  lower value from the quadratic formula
-function negativeQuadratic(a,b,c) {
- var quad = 1/(2*a);
-    quad = quad*(-b-(Math.sqrt((Math.pow(b,2))-(4*a*c))));
- return quad;
-}
-
-//returns the discriminant
-function discriminant(a,b,c) {
- var dis = ((Math.pow(b,2))-(4*a*c);
- return dis;
-}
-
 // draw a pixel at x,y using color
 function drawPixel(imagedata,x,y,color) {
     try {
