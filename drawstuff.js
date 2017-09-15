@@ -248,7 +248,7 @@ function drawRandPixelsInInputEllipsoids(context) {
     var inputEllipsoids = getInputEllipsoids();
     var w = context.canvas.width;
     var h = context.canvas.height;
-    
+    var distance = 0.5;
     var imagedata = context.createImageData(w,h);
     const PIXEL_DENSITY = 0.05;
     var numCanvasPixels = (w*h)*PIXEL_DENSITY;
@@ -271,16 +271,16 @@ function drawRandPixelsInInputEllipsoids(context) {
         //console.log("number of ellipses: " + n);
 
         // Loop over the ellipsoids, draw rand pixels in each
-        for (var e=0; e<1; e++) {
-            cx = inputEllipsoids[e].x; // ellipsoid center x
-            cy = inputEllipsoids[e].y; // ellipsoid center y
-            cz = inputEllipsoids[e].z;// ellipsoid center z
-            ellipsoidXRadius = inputEllipsoids[e].a; // x radius
-            ellipsoidYRadius = inputEllipsoids[e].b; // y radius
-            ellipsoidZRadius = inputEllipsoids[e].c; //z radius
+        for (var e=0; e<n; e++) {
+            cx = w*inputEllipsoids[e].x; // ellipsoid center x
+            cy = h*inputEllipsoids[e].y; // ellipsoid center y
+            cz = distance*inputEllipsoids[e].z;// ellipsoid center z
+            ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a); // x radius
+            ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b); // y radius
+            ellipsoidZRadius = Math.round(distance*inputEllipsoids[e].c); //z radius
             console.log("ellipsoid x radius: "+ellipsoidXRadius);
             console.log("ellipsoid y radius: "+ellipsoidYRadius);
-            
+            console.log("num ellipsoid pixels: "+numEllipsoidPixels);
             var center = new Vector(cx,cy,cz);
             var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
            
@@ -291,10 +291,39 @@ function drawRandPixelsInInputEllipsoids(context) {
                 255); // ellipsoid diffuse color
             for (var x=0; x<w; x++) {
                 for(var y=0;y<h;y++){
-                   
+                   var t = x/w;
+				   var s = y/h;
+				   var PLZ = UL.z +(s*(LL.z-UL.z));
+				   var PRZ = UR.z + (s*(LR.z-UR.z));
+				   var Pz = PLZ + (t*(PRZ-PLZ));
 				   
+				   var PLX = UL.x +(s*(LL.x-UL.x));
+				   var PRX = UR.x + (s*(LR.x-UR.x));
+				   var Px = PLX + (t*(PRX-PLX));
+				   
+				   var PLY = UL.y +(s*(LL.y-UL.y));
+				   var PRY = UR.y + (s*(LR.y-UR.y));
+				   var Py = PLY + (t*(PRY-PLY));
+				   
+				   var pixel = new Vector(px,py,pz);
+				   
+				   var D = new Vector();
+				   D = Vector.subtract(pixel,eye);
+				   var DdivA = new Vector();
+				   DdivA = Vector.divide(D,radius);
+				   var EminC = Vector.subtract(eye,center);
+                   var EminCdivA = Vector.divide(EminC,radius);
+				   var a = Vector.dot(DdivA,DdivA);
+				   var b = Vector.dot(DdivA,EminCdivA);
+				   var b = b*2
+				   var c = Vector.dot(EminCdivA,EminCdivA);
+				   var c = c-1;
+				   
+				   var div = discriminant(a,b,c);
+				   
+				   if( div >= 0){
 					drawPixel(imagedata,x,y,c);
-				   
+				   }
                 }
                 } // end for pixels in ellipsoid
         } // end for ellipsoids
@@ -351,10 +380,10 @@ function main() {
     //drawRandPixels(context);
       // shows how to draw pixels
     
-    drawRandPixelsInInputEllipsoids(context);
+    //drawRandPixelsInInputEllipsoids(context);
       // shows how to draw pixels and read input file
       
-    //drawInputEllipsoidsUsingArcs(context);
+    drawInputEllipsoidsUsingArcs(context);
       // shows how to read input file, but not how to draw pixels
 }
 
