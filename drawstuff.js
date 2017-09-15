@@ -270,9 +270,14 @@ function drawRandPixelsInInputEllipsoids(context) {
     var inputEllipsoids = getInputEllipsoids();
     var w = context.canvas.width;
     var h = context.canvas.height;
+    var d = 0.5;
     var imagedata = context.createImageData(w,h);
     const PIXEL_DENSITY = 0.05;
-    var numCanvasPixels = (w*h)*PIXEL_DENSITY; 
+    var numCanvasPixels = (w*h)*PIXEL_DENSITY;
+    var LL = new Vector(0,h,0);
+    var UL = new Vector(0,0,0);
+    var UR = new Vector(w,0,0);
+    var LR = new Vector(w,h,0);
     
     if (inputEllipsoids != String.null) { 
         var x = 0; var y = 0; var z = 0; // pixel coord init
@@ -283,7 +288,7 @@ function drawRandPixelsInInputEllipsoids(context) {
         var numEllipsoidPixels = 0; // init num pixels in ellipsoid
         var c = new Color(0,0,0,0); // init the ellipsoid color
         var n = inputEllipsoids.length; // the number of input ellipsoids
-        var eye = new Vector(0.5,0.5,0.5); //eye location
+        var eye = new Vector(0.5,0.5,-0.5); //eye location
         var lightPos = new Vector(-1,3,-0.5); //light location
         var lightCol = new Vector(1,1,1); //light color
         //console.log("number of ellipses: " + n);
@@ -292,30 +297,26 @@ function drawRandPixelsInInputEllipsoids(context) {
         for (var e=0; e<n; e++) {
             cx = w*inputEllipsoids[e].x; // ellipsoid center x
             cy = h*inputEllipsoids[e].y; // ellipsoid center y
+            cz = d*inputEllipsoids[e].z;// ellipsoid center z
             ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a); // x radius
             ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b); // y radius
-            numEllipsoidPixels = inputEllipsoids[e].a*inputEllipsoids[e].b*Math.PI; // projected ellipsoid area
-            numEllipsoidPixels *= PIXEL_DENSITY * w * h; // percentage of ellipsoid area to render to pixels
-            numEllipsoidPixels = Math.round(numEllipsoidPixels);
-            console.log("ellipsoid x radius: "+ellipsoidXRadius);
-            console.log("ellipsoid y radius: "+ellipsoidYRadius);
-            console.log("num ellipsoid pixels: "+numEllipsoidPixels);
+            ellipsoidZRadius = Math.round(d*inputEllipsoids[e].c); //z radius
+            
+            var center = new Vector(cx,cy,cz);
+            var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
+           
             c.change(
                 inputEllipsoids[e].diffuse[0]*255,
                 inputEllipsoids[e].diffuse[1]*255,
                 inputEllipsoids[e].diffuse[2]*255,
                 255); // ellipsoid diffuse color
-            for (var p=0; p<numEllipsoidPixels; p++) {
-                do {
-                    x = Math.random()*2 - 1; // in unit square 
-                    y = Math.random()*2 - 1; // in unit square
-                } while (Math.sqrt(x*x + y*y) > 1) // a circle is also an ellipse
-                drawPixel(imagedata,
-                    cx+Math.round(x*ellipsoidXRadius),
-                    cy+Math.round(y*ellipsoidYRadius),c);
-                //console.log("color: ("+c.r+","+c.g+","+c.b+")");
-                //console.log("x: "+Math.round(w*inputEllipsoids[e].x));
-                //console.log("y: "+Math.round(h*inputEllipsoids[e].y));
+            for (var x=0; x<w; x++) {
+               for(var y=0; y<h;y++) {
+                   drawPixel(imagedata,x,y,c);
+                   
+                   
+                   
+               }
             } // end for pixels in ellipsoid
         } // end for ellipsoids
         context.putImageData(imagedata, 0, 0);
