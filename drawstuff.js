@@ -143,17 +143,16 @@ function drawRandPixelsInInputEllipsoids(context) {
                 inputEllipsoids[e].diffuse[1]*255,
                 inputEllipsoids[e].diffuse[2]*255,
                 255); // ellipsoid diffuse color
-            for (var p=0; p<numEllipsoidPixels; p++) {
-                do {
-                    x = Math.random()*2 - 1; // in unit square 
-                    y = Math.random()*2 - 1; // in unit square
-                } while (Math.sqrt(x*x + y*y) > 1) // a circle is also an ellipse
-                drawPixel(imagedata,
-                    cx+Math.round(x*ellipsoidXRadius),
-                    cy+Math.round(y*ellipsoidYRadius),c);
+            for (var x=0; x<w; x++) {
+                for(var y=0;y<h;y++){
+                   drawPixel(imagedata,
+                    x,
+                    y,c);
                 //console.log("color: ("+c.r+","+c.g+","+c.b+")");
                 //console.log("x: "+Math.round(w*inputEllipsoids[e].x));
-                //console.log("y: "+Math.round(h*inputEllipsoids[e].y));
+                //console.log("y: "+Math.round(h*inputEllipsoids[e].y)); 
+                }
+                
             } // end for pixels in ellipsoid
         } // end for ellipsoids
         context.putImageData(imagedata, 0, 0);
@@ -207,10 +206,10 @@ function main() {
     //drawRandPixels(context);
       // shows how to draw pixels
     
-    //drawRandPixelsInInputEllipsoids(context);
+    drawRandPixelsInInputEllipsoids(context);
       // shows how to draw pixels and read input file
       
-    drawInputEllipsoidsUsingArcs(context);
+    //drawInputEllipsoidsUsingArcs(context);
       // shows how to read input file, but not how to draw pixels
 }
 
