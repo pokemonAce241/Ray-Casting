@@ -270,10 +270,7 @@ function drawRandPixelsInInputEllipsoids(context) {
     var imagedata = context.createImageData(w,h);
     const PIXEL_DENSITY = 0.05;
     var numCanvasPixels = (w*h)*PIXEL_DENSITY;
-    var LL = new Vector(0,h,0);
-    var UL = new Vector(0,0,0);
-    var UR = new Vector(w,0,0);
-    var LR = new Vector(w,h,0); 
+     
     
     if (inputEllipsoids != String.null) { 
         var x = 0; var y = 0; var z = 0; // pixel coord init
@@ -284,9 +281,7 @@ function drawRandPixelsInInputEllipsoids(context) {
         var numEllipsoidPixels = 0; // init num pixels in ellipsoid
         var c = new Color(0,0,0,0); // init the ellipsoid color
         var n = inputEllipsoids.length; // the number of input ellipsoids
-        var eye = new Vector(0.5,0.5,-0.5); //eye location
-        var lightPos = new Vector(-1,3,-0.5); //light location
-        var lightCol = new Vector(1,1,1); //light color
+        
         //console.log("number of ellipses: " + n);
 
         // Loop over the ellipsoids, draw rand pixels in each
