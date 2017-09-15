@@ -292,15 +292,15 @@ function drawRandPixelsInInputEllipsoids(context) {
             for (var x=0; x<w; x++) {
                 for(var y=0;y<h;y++){
                    var t = x/w;
-			console.log("t: "+t);
+			
 				   var s = y/h;
-			console.log("s: "+t);
+			
 				   var PLZ = UL.z +(s*(LL.z-UL.z));
-			console.log("PLZ: "+PLZ);
+			
 				   var PRZ = UR.z + (s*(LR.z-UR.z));
-			console.log("PRZ: "+PRZ);
+			
 				   var Pz = PLZ + (t*(PRZ-PLZ));
-			console.log("Pz: "+Pz);
+			
 				   
 				   var PLX = UL.x +(s*(LL.x-UL.x));
 				   var PRX = UR.x + (s*(LR.x-UR.x));
@@ -310,7 +310,7 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   var PRY = UR.y + (s*(LR.y-UR.y));
 				   var Py = PLY + (t*(PRY-PLY));
 				   
-				   var pixel = new Vector(px,py,pz);
+				   var pixel = new Vector(Px,Py,Pz);
 				   
 				   var D = new Vector();
 				   D = Vector.subtract(pixel,eye);
