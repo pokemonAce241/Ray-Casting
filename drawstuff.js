@@ -325,6 +325,7 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   var c = c-1;
 				   
 				   var div = discriminant(a,b,c);
+			console.log("discriminant: "+div);
 		if(div >= 0)	
 		drawPixel(imagedata,x,y,c);
 				   
