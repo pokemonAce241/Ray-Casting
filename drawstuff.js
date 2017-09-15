@@ -280,7 +280,7 @@ function drawRandPixelsInInputEllipsoids(context) {
             ellipsoidZRadius = inputEllipsoids[e].c; //z radius
             console.log("ellipsoid x radius: "+ellipsoidXRadius);
             console.log("ellipsoid y radius: "+ellipsoidYRadius);
-            console.log("num ellipsoid pixels: "+numEllipsoidPixels);
+            
             var center = new Vector(cx,cy,cz);
             var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
            
