@@ -310,8 +310,8 @@ function drawRandPixelsInInputEllipsoids(context) {
                 inputEllipsoids[e].diffuse[1]*255,
                 inputEllipsoids[e].diffuse[2]*255,
                 255); // ellipsoid diffuse color
-            for (var x=0; x<w; x++) {
-               for(var y=0; y<h;y++) {
+            for (var x=w; x>0; x--) {
+               for(var y=h; y>0;y--) {
                    drawPixel(imagedata,x,y,c);
                    
                    
