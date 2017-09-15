@@ -41,7 +41,163 @@ class Color {
 } // end color class
 
 
+// Vector class, base code from exercise 3
+class Vector { 
+    constructor(x=0,y=0,z=0) {
+        this.set(x,y,z);
+    } // end constructor
+    
+    // sets the components of a vector
+    set(x,y,z) {
+        try {
+            if ((typeof(x) !== "number") || (typeof(y) !== "number") || (typeof(z) !== "number"))
+                throw "vector component not a number";
+            else
+                this.x = x; this.y = y; this.z = z; 
+        } // end try
+        
+        catch(e) {
+            console.log(e);
+        }
+    } // end vector set
+    
+    // copy the passed vector into this one
+    copy(v) {
+        try {
+            if (!(v instanceof Vector))
+                throw "Vector.copy: non-vector parameter";
+            else
+                this.x = v.x; this.y = v.y; this.z = v.z;
+        } // end try
+        
+        catch(e) {
+            console.log(e);
+        }
+    }
+    
+    toConsole(prefix) {
+        console.log(prefix+"["+this.x+","+this.y+","+this.z+"]");
+    } // end to console
+    
+    // static dot method
+    static dot(v1,v2) {
+        try {
+            if (!(v1 instanceof Vector) || !(v2 instanceof Vector))
+                throw "Vector.dot: non-vector parameter";
+            else
+                return(v1.x*v2.x + v1.y*v2.y + v1.z*v2.z);
+        } // end try
+        
+        catch(e) {
+            console.log(e);
+            return(NaN);
+        }
+    } // end dot static method
+    
+    // static add method
+    static add(v1,v2) {
+        try {
+            if (!(v1 instanceof Vector) || !(v2 instanceof Vector))
+                throw "Vector.add: non-vector parameter";
+            else
+                return(new Vector(v1.x+v2.x,v1.y+v2.y,v1.z+v2.z));
+        } // end try
+        
+        catch(e) {
+            console.log(e);
+            return(new Vector(NaN,NaN,NaN));
+        }
+    } // end add static method
+    
+    
+    // static divide method
+    static divide(v1,v2) {
+        try {
+            if (!(v1 instanceof Vector) || !(v2 instanceof Vector))
+                throw "Vector.add: non-vector parameter";
+            else
+                return(new Vector(Math.round(v1.x/v2.x),Math.round(v1.y/v2.y),Math.round(v1.z/v2.z)));
+        } // end try
+        
+        catch(e) {
+            console.log(e);
+            return(new Vector(NaN,NaN,NaN));
+        }
+    } // end  static method
+    
+
+    // static subtract method, v1-v2
+    static subtract(v1,v2) {
+        try {
+            if (!(v1 instanceof Vector) || !(v2 instanceof Vector))
+                throw "Vector.subtract: non-vector parameter";
+            else {
+                var v = new Vector(v1.x-v2.x,v1.y-v2.y,v1.z-v2.z);
+                //v.toConsole("Vector.subtract: ");
+                return(v);
+            }
+        } // end try
+        
+        catch(e) {
+            console.log(e);
+            return(new Vector(NaN,NaN,NaN));
+        }
+    } // end subtract static method
+
+    // static scale method
+    static scale(c,v) {
+        try {
+            if (!(typeof(c) === "number") || !(v instanceof Vector))
+                throw "Vector.scale: malformed parameter";
+            else
+                return(new Vector(c*v.x,c*v.y,c*v.z));
+        } // end try
+        
+        catch(e) {
+            console.log(e);
+            return(new Vector(NaN,NaN,NaN));
+        }
+    } // end scale static method
+    
+    // static normalize method
+    static normalize(v) {
+        try {
+            if (!(v instanceof Vector))
+                throw "Vector.normalize: parameter not a vector";
+            else {
+                var lenDenom = 1/Math.sqrt(Vector.dot(v,v));
+                return(Vector.scale(lenDenom,v));
+            }
+        } // end try
+        
+        catch(e) {
+            console.log(e);
+            return(new Vector(NaN,NaN,NaN));
+        }
+    } // end scale static method
+    
+} // end Vector class
+
+
 /* utility functions */
+
+// returns the  upper value from the quadratic formula
+function positiveQuadratic(a,b,c) {
+ 
+    return(1/(2*a)) * (-b + (Math.sqrt((Math.pow(b,2)) - (4*a*c))));
+ 
+}
+
+// returns the  lower value from the quadratic formula
+function negativeQuadratic(a,b,c) {
+ return(1/(2*a)) * (-b - (Math.sqrt((Math.pow(b,2)) - (4*a*c))));
+}
+
+//returns the discriminant
+function discriminant(a,b,c) {
+ return((Math.pow(b,2))-(4*a*c);
+
+}
 
 // draw a pixel at x,y using color
 function drawPixel(imagedata,x,y,color) {
@@ -112,53 +268,89 @@ function drawRandPixelsInInputEllipsoids(context) {
     var inputEllipsoids = getInputEllipsoids();
     var w = context.canvas.width;
     var h = context.canvas.height;
+    var distance = 0.5;
     var imagedata = context.createImageData(w,h);
     const PIXEL_DENSITY = 0.05;
-    var numCanvasPixels = (w*h)*PIXEL_DENSITY; 
+    var numCanvasPixels = (w*h)*PIXEL_DENSITY;
+    var LL = new Vector(0,h,0);
+    var UL = new Vector(0,0,0);
+    var UR = new Vector(w,0,0);
+    var LR = new Vector(w,h,0);
     
     if (inputEllipsoids != String.null) { 
-        var x = 0; var y = 0; // pixel coord init
-        var cx = 0; var cy = 0; // init center x and y coord
+        var x = 0; var y = 0; var z = 0; // pixel coord init
+        var cx = 0; var cy = 0; var cz = 0; // init center x,y, and z coord
         var ellipsoidXRadius = 0; // init ellipsoid x radius
         var ellipsoidYRadius = 0; // init ellipsoid y radius
-        var numEllipsoidPixels = 0; // init num pixels in ellipsoid
+        var ellipsoidZRadius = 0; // init ellipsoid z radius
         var c = new Color(0,0,0,0); // init the ellipsoid color
         var n = inputEllipsoids.length; // the number of input ellipsoids
+        var eye = new Vector(0.5,0.5,-0.5); //eye location
+        var lightPos = new Vector(-1,3,-0.5); //light location
+        var lightCol = new Vector(1,1,1); //light color
         //console.log("number of ellipses: " + n);
 
         // Loop over the ellipsoids, draw rand pixels in each
         for (var e=0; e<n; e++) {
             cx = w*inputEllipsoids[e].x; // ellipsoid center x
             cy = h*inputEllipsoids[e].y; // ellipsoid center y
+            cz = distance*inputEllipsoids[e].z;// ellipsoid center z
             ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a); // x radius
             ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b); // y radius
-            numEllipsoidPixels = inputEllipsoids[e].a*inputEllipsoids[e].b*Math.PI; // projected ellipsoid area
-            numEllipsoidPixels *= PIXEL_DENSITY * w * h; // percentage of ellipsoid area to render to pixels
-            numEllipsoidPixels = Math.round(numEllipsoidPixels);
+            ellipsoidZRadius = Math.round(distance*inputEllipsoids[e].c); //z radius
             console.log("ellipsoid x radius: "+ellipsoidXRadius);
             console.log("ellipsoid y radius: "+ellipsoidYRadius);
             console.log("num ellipsoid pixels: "+numEllipsoidPixels);
+            var center = new Vector(cx,cy,cz);
+            var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
+           
             c.change(
                 inputEllipsoids[e].diffuse[0]*255,
                 inputEllipsoids[e].diffuse[1]*255,
                 inputEllipsoids[e].diffuse[2]*255,
                 255); // ellipsoid diffuse color
-            for (var p=0; p<numEllipsoidPixels; p++) {
-                do {
-                    x = Math.random()*2 - 1; // in unit square 
-                    y = Math.random()*2 - 1; // in unit square
-                } while (Math.sqrt(x*x + y*y) > 1) // a circle is also an ellipse
-                drawPixel(imagedata,
-                    cx+Math.round(x*ellipsoidXRadius),
-                    cy+Math.round(y*ellipsoidYRadius),c);
-                //console.log("color: ("+c.r+","+c.g+","+c.b+")");
-                //console.log("x: "+Math.round(w*inputEllipsoids[e].x));
-                //console.log("y: "+Math.round(h*inputEllipsoids[e].y));
-            } // end for pixels in ellipsoid
+            for (var x=0; x<w; x++) {
+                for(var y=0;y<h;y++){
+                   var t = x/w;
+				   var s = y/h;
+				   var PLZ = UL.z +(s*(LL.z-UL.z));
+				   var PRZ = UR.z + (s*(LR.z-UR.z));
+				   var Pz = PLZ + (t*(PRZ-PLZ));
+				   
+				   var PLX = UL.x +(s*(LL.x-UL.x));
+				   var PRX = UR.x + (s*(LR.x-UR.x));
+				   var Px = PLX + (t*(PRX-PLX));
+				   
+				   var PLY = UL.y +(s*(LL.y-UL.y));
+				   var PRY = UR.y + (s*(LR.y-UR.y));
+				   var Py = PLY + (t*(PRY-PLY));
+				   
+				   var pixel = new Vector(px,py,pz);
+				   
+				   var D = new Vector();
+				   D = Vector.subtract(pixel,eye);
+				   var DdivA = new Vector();
+				   DdivA = Vector.divide(D,radius);
+				   var EminC = Vector.subtract(eye,center);
+                   var EminCdivA = Vector.divide(EminC,radius);
+				   var a = Vector.dot(DdivA,DdivA);
+				   var b = Vector.dot(DdivA,EminCdivA);
+				   var b = b*2
+				   var c = Vector.dot(EminCdivA,EminCdivA);
+				   var c = c-1;
+				   
+				   var div = discriminant(a,b,c);
+				   
+				   if( div >= 0){
+					drawPixel(imagedata,x,y,c);
+				   }
+                }
+                } // end for pixels in ellipsoid
         } // end for ellipsoids
         context.putImageData(imagedata, 0, 0);
     } // end if ellipsoids found
 } // end draw rand pixels in input ellipsoids
+
 
 // draw 2d projections read from the JSON file at class github
 function drawInputEllipsoidsUsingArcs(context) {
@@ -170,6 +362,7 @@ function drawInputEllipsoidsUsingArcs(context) {
         var w = context.canvas.width;
         var h = context.canvas.height;
         var n = inputEllipsoids.length; 
+        
         //console.log("number of ellipsoids: " + n);
 
         // Loop over the ellipsoids, draw each in 2d
