@@ -292,7 +292,35 @@ function drawRandPixelsInInputEllipsoids(context) {
             for (var x=0; x<w; x++) {
                 for(var y=0;y<h;y++){
                    
+			var t = x/w;
+				   var s = y/h;
+				   var PLZ = UL.z +(s*(LL.z-UL.z));
+				   var PRZ = UR.z + (s*(LR.z-UR.z));
+				   var Pz = PLZ + (t*(PRZ-PLZ));
 				   
+				   var PLX = UL.x +(s*(LL.x-UL.x));
+				   var PRX = UR.x + (s*(LR.x-UR.x));
+				   var Px = PLX + (t*(PRX-PLX));
+				   
+				   var PLY = UL.y +(s*(LL.y-UL.y));
+				   var PRY = UR.y + (s*(LR.y-UR.y));
+				   var Py = PLY + (t*(PRY-PLY));
+				   
+				   var pixel = new Vector(px,py,pz);
+				   
+				   var D = new Vector();
+				   D = Vector.subtract(pixel,eye);
+				   var DdivA = new Vector();
+				   DdivA = Vector.divide(D,radius);
+				   var EminC = Vector.subtract(eye,center);
+                   var EminCdivA = Vector.divide(EminC,radius);
+				   var A = Vector.dot(DdivA,DdivA);
+				   var B = Vector.dot(DdivA,EminCdivA);
+				   var B = B*2
+				   var C = Vector.dot(EminCdivA,EminCdivA);
+				   var C = C-1;
+				   
+				   var div = discriminant(A,B,C);	   
 				   
 					drawPixel(imagedata,x,y,c);
 				   
