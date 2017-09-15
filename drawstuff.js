@@ -306,7 +306,7 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   var PRY = UR.y + (s*(LR.y-UR.y));
 				   var Py = PLY + (t*(PRY-PLY));
 				   
-				   var pixel = new Vector(px,py,pz);
+				   var pixel = new Vector(Px,Py,Pz);
 				   
 				   var D = new Vector();
 				   D = Vector.subtract(pixel,eye);
