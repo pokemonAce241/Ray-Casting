@@ -273,13 +273,13 @@ function drawRandPixelsInInputEllipsoids(context) {
 
         // Loop over the ellipsoids, draw rand pixels in each
         for (var e=0; e<n; e++) {
-            cx = inputEllipsoids[e].x; // ellipsoid center x
-            cy = inputEllipsoids[e].y; // ellipsoid center y
+            cx = w*inputEllipsoids[e].x; // ellipsoid center x
+            cy = h*inputEllipsoids[e].y; // ellipsoid center y
             cz = inputEllipsoids[e].z;// ellipsoid center z
-            ellipsoidXRadius = inputEllipsoids[e].a;  // x radius
-            ellipsoidYRadius = inputEllipsoids[e].b;  // y radius
+            ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a);  // x radius
+            ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b);  // y radius
             ellipsoidZRadius = inputEllipsoids[e].c; //z radius
-		
+		scale = inputEllipsoids[e]
             console.log("ellipsoid x radius: "+ellipsoidXRadius);
             console.log("ellipsoid y radius: "+ellipsoidYRadius);
             
@@ -315,11 +315,11 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   //D = Vector.normalize(D);
 				   var DdivA = new Vector();
 				   DdivA = Vector.divide(D,radius);
-				   DdivA = Vector.normalize(DdivA);
+				   //DdivA = Vector.normalize(DdivA);
 				   var EminC = Vector.subtract(eye,center);
 				   //EminC = Vector.normalize(EminC);
                    		   var EminCdivA = Vector.divide(EminC,radius);
-				   EminCdivA = Vector.normalize(EminCdivA);
+				   //EminCdivA = Vector.normalize(EminCdivA);
 				   var A = Vector.dot(DdivA,DdivA);
 				   var B = Vector.dot(DdivA,EminCdivA);
 				   var B = B*2
