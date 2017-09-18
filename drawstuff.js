@@ -326,7 +326,7 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   
 				   var div = discriminant(A,B,C);	   
 				   if(div >=0)
-					drawPixel(imagedata,Math.round(Px),Math.round(Py),c);
+					drawPixel(imagedata,Math.round(x),Math.round(y),c);
 				   
                 }
                 } // end for pixels in ellipsoid
