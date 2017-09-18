@@ -263,6 +263,7 @@ function drawRandPixelsInInputEllipsoids(context) {
         var ellipsoidXRadius = 0; // init ellipsoid x radius
         var ellipsoidYRadius = 0; // init ellipsoid y radius
         var ellipsoidZRadius = 0; // init ellipsoid z radius
+	var scale = 0;
         var c = new Color(0,0,0,0); // init the ellipsoid color
         var n = inputEllipsoids.length; // the number of input ellipsoids
         var eye = new Vector(0.5,0.5,-0.5); //eye location
@@ -275,9 +276,10 @@ function drawRandPixelsInInputEllipsoids(context) {
             cx = w*inputEllipsoids[e].x; // ellipsoid center x
             cy = h*inputEllipsoids[e].y; // ellipsoid center y
             cz = inputEllipsoids[e].z;// ellipsoid center z
-            ellipsoidXRadius = w*inputEllipsoids[e].a;  // x radius
-            ellipsoidYRadius = h*inputEllipsoids[e].b;  // y radius
+            ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a);  // x radius
+            ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b);  // y radius
             ellipsoidZRadius = inputEllipsoids[e].c; //z radius
+		scale = inputEllipsoids[e]
             console.log("ellipsoid x radius: "+ellipsoidXRadius);
             console.log("ellipsoid y radius: "+ellipsoidYRadius);
             
