@@ -310,10 +310,10 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   
 				   var D = new Vector();
 				   D = Vector.subtract(pixel,eye);
-				   //D = Vector.normalize(D);
+				   D = Vector.normalize(D);
 				   var DdivA = new Vector();
 				   DdivA = Vector.divide(D,radius);
-				   //DdivA = Vector.normalize(DdivA);
+				   DdivA = Vector.normalize(DdivA);
 				   var EminC = Vector.subtract(eye,center);
 				   //EminC = Vector.normalize(EminC);
                    		   var EminCdivA = Vector.divide(EminC,radius);
