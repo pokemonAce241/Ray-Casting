@@ -252,10 +252,10 @@ function drawRandPixelsInInputEllipsoids(context) {
     var imagedata = context.createImageData(w,h);
     const PIXEL_DENSITY = 0.05;
     var numCanvasPixels = (w*h)*PIXEL_DENSITY;
-    var LL = new Vector(0,h,0);
+    var LL = new Vector(0,1,0);
     var UL = new Vector(0,0,0);
-    var UR = new Vector(w,0,0);
-    var LR = new Vector(w,h,0);
+    var UR = new Vector(1,0,0);
+    var LR = new Vector(1,1,0);
     
     if (inputEllipsoids != String.null) { 
         var x = 0; var y = 0; var z = 0; // pixel coord init
@@ -273,11 +273,11 @@ function drawRandPixelsInInputEllipsoids(context) {
 
         // Loop over the ellipsoids, draw rand pixels in each
         for (var e=0; e<n; e++) {
-            cx = w*inputEllipsoids[e].x; // ellipsoid center x
-            cy = h*inputEllipsoids[e].y; // ellipsoid center y
+            cx = inputEllipsoids[e].x; // ellipsoid center x
+            cy = inputEllipsoids[e].y; // ellipsoid center y
             cz = inputEllipsoids[e].z;// ellipsoid center z
-            ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a);  // x radius
-            ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b);  // y radius
+            ellipsoidXRadius = inputEllipsoids[e].a;  // x radius
+            ellipsoidYRadius = inputEllipsoids[e].b;  // y radius
             ellipsoidZRadius = inputEllipsoids[e].c; //z radius
 		scale = inputEllipsoids[e]
             console.log("ellipsoid x radius: "+ellipsoidXRadius);
