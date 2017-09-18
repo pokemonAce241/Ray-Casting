@@ -271,11 +271,11 @@ function drawRandPixelsInInputEllipsoids(context) {
         //console.log("number of ellipses: " + n);
 
         // Loop over the ellipsoids, draw rand pixels in each
-        for (var e=0; e<1; e++) {
+        for (var e=0; e<n; e++) {
             cx = w*inputEllipsoids[e].x; // ellipsoid center x
             cy = h*inputEllipsoids[e].y; // ellipsoid center y
             cz = inputEllipsoids[e].z;// ellipsoid center z
-            ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a)  // x radius
+            ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a);  // x radius
             ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b);  // y radius
             ellipsoidZRadius = inputEllipsoids[e].c; //z radius
             console.log("ellipsoid x radius: "+ellipsoidXRadius);
@@ -291,9 +291,9 @@ function drawRandPixelsInInputEllipsoids(context) {
                 255); // ellipsoid diffuse color
             for (var y=0; y<h; y++) {
                 for(var x=0;x<w;x++){
-                   	var t = x/w; 
+                   
+			var t = x/w; 
 			var s = y/h;
-			
 				   var PLZ = UL.z +(s*(LL.z-UL.z));
 				   var PRZ = UR.z + (s*(LR.z-UR.z));
 				   var Pz = PLZ + (t*(PRZ-PLZ));
@@ -325,12 +325,8 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   var C = C-1;
 				   
 				   var div = discriminant(A,B,C);	   
-				   if(div >=0){
-					
-					drawPixel(imagedata,Math.round(t*w),Math.round(s*h),c);
-					
-				   }
-				   
+				   if(div >=0)
+				   	drawPixel(imagedata,Math.round(x),Math.round(y),c);
                 }
                 } // end for pixels in ellipsoid
         } // end for ellipsoids
