@@ -275,8 +275,8 @@ function drawRandPixelsInInputEllipsoids(context) {
             cx = w*inputEllipsoids[e].x; // ellipsoid center x
             cy = h*inputEllipsoids[e].y; // ellipsoid center y
             cz = inputEllipsoids[e].z;// ellipsoid center z
-            ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a);  // x radius
-            ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b);  // y radius
+            ellipsoidXRadius = w*inputEllipsoids[e].a;  // x radius
+            ellipsoidYRadius = h*inputEllipsoids[e].b;  // y radius
             ellipsoidZRadius = inputEllipsoids[e].c; //z radius
             console.log("ellipsoid x radius: "+ellipsoidXRadius);
             console.log("ellipsoid y radius: "+ellipsoidYRadius);
