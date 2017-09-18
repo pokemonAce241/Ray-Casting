@@ -289,11 +289,10 @@ function drawRandPixelsInInputEllipsoids(context) {
                 inputEllipsoids[e].diffuse[1]*255,
                 inputEllipsoids[e].diffuse[2]*255,
                 255); // ellipsoid diffuse color
-            for (var y=0; y<h; y++) {
-                for(var x=0;x<w;x++){
+            for (var t=0; t<1; t+(1/(h-1))) {
+                for(var s=0;s<1;s+(1/(w-1))){
                    
-			var t = x/w; 
-			var s = y/h;
+			
 				   var PLZ = UL.z +(s*(LL.z-UL.z));
 				   var PRZ = UR.z + (s*(LR.z-UR.z));
 				   var Pz = PLZ + (t*(PRZ-PLZ));
@@ -327,7 +326,7 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   var div = discriminant(A,B,C);	   
 				   if(div >=0){
 					
-					drawPixel(imagedata,Math.round(Px),Math.round(Py),c);
+					drawPixel(imagedata,Math.round(t*w),Math.round(s*h),c);
 					
 				   }
 				   
