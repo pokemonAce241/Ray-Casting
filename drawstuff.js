@@ -272,11 +272,11 @@ function drawRandPixelsInInputEllipsoids(context) {
 
         // Loop over the ellipsoids, draw rand pixels in each
         for (var e=0; e<1; e++) {
-            cx = inputEllipsoids[e].x; // ellipsoid center x
-            cy = inputEllipsoids[e].y; // ellipsoid center y
+            cx = w*inputEllipsoids[e].x; // ellipsoid center x
+            cy = h*inputEllipsoids[e].y; // ellipsoid center y
             cz = inputEllipsoids[e].z;// ellipsoid center z
-            ellipsoidXRadius = inputEllipsoids[e].a;  // x radius
-            ellipsoidYRadius = inputEllipsoids[e].b;  // y radius
+            ellipsoidXRadius = Math.round(w*inputEllipsoids[e].a)  // x radius
+            ellipsoidYRadius = Math.round(h*inputEllipsoids[e].b);  // y radius
             ellipsoidZRadius = inputEllipsoids[e].c; //z radius
             console.log("ellipsoid x radius: "+ellipsoidXRadius);
             console.log("ellipsoid y radius: "+ellipsoidYRadius);
@@ -289,9 +289,10 @@ function drawRandPixelsInInputEllipsoids(context) {
                 inputEllipsoids[e].diffuse[1]*255,
                 inputEllipsoids[e].diffuse[2]*255,
                 255); // ellipsoid diffuse color
-            for (var t=0; t<1; t+(1/(h-1))) {
-                for(var s=0;s<1;s+(1/(w-1))){
-                   
+            for (var y=0; y<h; y++) {
+                for(var x=0;x<w;x++){
+                   	var t = x/w; 
+			var s = y/h;
 			
 				   var PLZ = UL.z +(s*(LL.z-UL.z));
 				   var PRZ = UR.z + (s*(LR.z-UR.z));
