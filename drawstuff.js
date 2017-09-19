@@ -263,7 +263,7 @@ function drawRandPixelsInInputEllipsoids(context) {
         var ellipsoidXRadius = 0; // init ellipsoid x radius
         var ellipsoidYRadius = 0; // init ellipsoid y radius
         var ellipsoidZRadius = 0; // init ellipsoid z radius
-	
+	var scale = 0;
         var c = new Color(0,0,0,0); // init the ellipsoid color
         var n = inputEllipsoids.length; // the number of input ellipsoids
         var eye = new Vector(0.5,0.5,-0.5); //eye location
@@ -271,7 +271,27 @@ function drawRandPixelsInInputEllipsoids(context) {
         var lightCol = new Vector(1,1,1); //light color
         //console.log("number of ellipses: " + n);
 
-for (var y=0; y<h; y++) {
+        // Loop over the ellipsoids, draw rand pixels in each
+        for (var e=0; e<n; e++) {
+            cx = inputEllipsoids[e].x; // ellipsoid center x
+            cy = inputEllipsoids[e].y; // ellipsoid center y
+            cz = inputEllipsoids[e].z;// ellipsoid center z
+            ellipsoidXRadius = inputEllipsoids[e].a;  // x radius
+            ellipsoidYRadius = inputEllipsoids[e].b;  // y radius
+            ellipsoidZRadius = inputEllipsoids[e].c; //z radius
+		scale = inputEllipsoids[e]
+            console.log("ellipsoid x radius: "+ellipsoidXRadius);
+            console.log("ellipsoid y radius: "+ellipsoidYRadius);
+            
+            var center = new Vector(cx,cy,cz);
+            var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
+           
+            c.change(
+                inputEllipsoids[e].diffuse[0]*255,
+                inputEllipsoids[e].diffuse[1]*255,
+                inputEllipsoids[e].diffuse[2]*255,
+                255); // ellipsoid diffuse color
+            for (var y=0; y<h; y++) {
                 for(var x=0;x<w;x++){
                    
 			var t = x/w; 
@@ -289,27 +309,8 @@ for (var y=0; y<h; y++) {
 				   var Py = PLY + (t*(PRY-PLY));
 				   
 				   var pixel = new Vector(Px,Py,Pz);
-	for (var e=0; e<1; e++) {
-            cx = inputEllipsoids[e].x; // ellipsoid center x
-            cy = inputEllipsoids[e].y; // ellipsoid center y
-            cz = inputEllipsoids[e].z;// ellipsoid center z
-            ellipsoidXRadius = inputEllipsoids[e].a;  // x radius
-            ellipsoidYRadius = inputEllipsoids[e].b;  // y radius
-            ellipsoidZRadius = inputEllipsoids[e].c; //z radius
-		
-            console.log("ellipsoid x radius: "+ellipsoidXRadius);
-            console.log("ellipsoid y radius: "+ellipsoidYRadius);
-            
-            var center = new Vector(cx,cy,cz);
-            var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
-           
-            c.change(
-                inputEllipsoids[e].diffuse[0]*255,
-                inputEllipsoids[e].diffuse[1]*255,
-                inputEllipsoids[e].diffuse[2]*255,
-                255); // ellipsoid diffuse color
-				
-				 var D = new Vector();
+				   
+				   var D = new Vector();
 				   D = Vector.subtract(pixel,eye);
 				   //D = Vector.normalize(D);
 				   var DdivA = new Vector();
@@ -326,33 +327,16 @@ for (var y=0; y<h; y++) {
 				   var C = C-1;
 				   
 				   var div = discriminant(A,B,C);	   
-				   if(div >=0){
-				    var t1 = positiveQuadratic(A,B,C);
-					var t2 = negativeQuadratic(A,B,C);
-					var closeT = 0;
-					if(t1 < t2){
-						closeT = t1;
-						if(closeT < 1)
-							closeT = t2;
-					}
-					else{
-						closeT = t2;
-						if(closeT <1)
-							closeT = t1;
-					}
-						var intercept = new Vector;
-						intercept = Vector.scale(closeT,D);
-						intercept = Vector.add(eye,intercept);
-						
-					drawPixel(imagedata,Math.round(x),Math.round(y),c);
-					
-					}
-            
-        } // end for ellipsoids         
+				   if(div >=0)
+				   	drawPixel(imagedata,Math.round(x),Math.round(y),c);
+			           
                 }
-                } // end for pixels
+                } // end for pixels in ellipsoid
+        } // end for ellipsoids
+        context.putImageData(imagedata, 0, 0);
+    } // end if ellipsoids found
 } // end draw rand pixels in input ellipsoids
-}
+
 
 // draw 2d projections read from the JSON file at class github
 function drawInputEllipsoidsUsingArcs(context) {
@@ -408,4 +392,3 @@ function main() {
     //drawInputEllipsoidsUsingArcs(context);
       // shows how to read input file, but not how to draw pixels
 }
-
