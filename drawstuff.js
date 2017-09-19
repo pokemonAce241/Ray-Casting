@@ -271,8 +271,8 @@ function drawRandPixelsInInputEllipsoids(context) {
         var lightCol = new Vector(1,1,1); //light color
         //console.log("number of ellipses: " + n);
 
-for (var y=0; y<h; y++) {
-                for(var x=0;x<w;x++){
+for (var y=384; y<h; y++) {
+                for(var x=384;x<w;x++){
                    
 			var t = x/w; 
 			var s = y/h;
