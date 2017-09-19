@@ -272,7 +272,7 @@ function drawRandPixelsInInputEllipsoids(context) {
         //console.log("number of ellipses: " + n);
 
         // Loop over the ellipsoids, draw rand pixels in each
-        for (var e=0; e<1; e++) {
+        for (var e=2; e<n; e++) {
             cx = inputEllipsoids[e].x; // ellipsoid center x
             cy = inputEllipsoids[e].y; // ellipsoid center y
             cz = inputEllipsoids[e].z;// ellipsoid center z
