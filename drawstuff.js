@@ -271,8 +271,25 @@ function drawRandPixelsInInputEllipsoids(context) {
         var lightCol = new Vector(1,1,1); //light color
         //console.log("number of ellipses: " + n);
 
-for (var y=0; y<h; y++) {
-                for(var x=0;x<w;x++){
+        // Loop over the ellipsoids, draw rand pixels in each
+        for (var e=0; e<n; e++) {
+            cx = inputEllipsoids[e].x; // ellipsoid center x
+            cy = inputEllipsoids[e].y; // ellipsoid center y
+            cz = inputEllipsoids[e].z;// ellipsoid center z
+            ellipsoidXRadius = inputEllipsoids[e].a;  // x radius
+            ellipsoidYRadius = inputEllipsoids[e].b;  // y radius
+            ellipsoidZRadius = inputEllipsoids[e].c; //z radius
+		    
+            var center = new Vector(cx,cy,cz);
+            var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
+           
+            c.change(
+                inputEllipsoids[e].diffuse[0]*255,
+                inputEllipsoids[e].diffuse[1]*255,
+                inputEllipsoids[e].diffuse[2]*255,
+                255); // ellipsoid diffuse color
+            for (var x=0; x<w; x++) {
+                for(var y=0;y<h;y++){
                    
 			var t = x/w; 
 			var s = y/h;
@@ -289,27 +306,8 @@ for (var y=0; y<h; y++) {
 				   var Py = PLY + (t*(PRY-PLY));
 				   
 				   var pixel = new Vector(Px,Py,Pz);
-	for (var e=0; e<1; e++) {
-            cx = inputEllipsoids[e].x; // ellipsoid center x
-            cy = inputEllipsoids[e].y; // ellipsoid center y
-            cz = inputEllipsoids[e].z;// ellipsoid center z
-            ellipsoidXRadius = inputEllipsoids[e].a;  // x radius
-            ellipsoidYRadius = inputEllipsoids[e].b;  // y radius
-            ellipsoidZRadius = inputEllipsoids[e].c; //z radius
-		
-            console.log("ellipsoid x radius: "+ellipsoidXRadius);
-            console.log("ellipsoid y radius: "+ellipsoidYRadius);
-            
-            var center = new Vector(cx,cy,cz);
-            var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
-           
-            c.change(
-                inputEllipsoids[e].diffuse[0]*255,
-                inputEllipsoids[e].diffuse[1]*255,
-                inputEllipsoids[e].diffuse[2]*255,
-                255); // ellipsoid diffuse color
-				
-				 var D = new Vector();
+				   
+				   var D = new Vector();
 				   D = Vector.subtract(pixel,eye);
 				   //D = Vector.normalize(D);
 				   var DdivA = new Vector();
@@ -321,13 +319,14 @@ for (var y=0; y<h; y++) {
 				   //EminCdivA = Vector.normalize(EminCdivA);
 				   var A = Vector.dot(DdivA,DdivA);
 				   var B = Vector.dot(DdivA,EminCdivA);
-				   var B = B*2;
+				   B = B*2;
 				   var C = Vector.dot(EminCdivA,EminCdivA);
-				   var C = C-1;
+				   C = C-1;
 				   
 				   var div = discriminant(A,B,C);	   
-				   if(div >=0){
-				    var t1 = positiveQuadratic(A,B,C);
+				   if(div >=0)
+				   {
+					var t1 = positiveQuadratic(A,B,C);
 					var t2 = negativeQuadratic(A,B,C);
 					var closeT = 0;
 					if(t1 < t2){
@@ -343,16 +342,18 @@ for (var y=0; y<h; y++) {
 						var intercept = new Vector;
 						intercept = Vector.scale(closeT,D);
 						intercept = Vector.add(eye,intercept);
-						
-					drawPixel(imagedata,Math.round(x),Math.round(y),c);
-					
+					   var xIn = Math.round(w*intercept.x);
+					   var yIn = Math.round(h*intercept.y);
+				   	drawPixel(imagedata,Math.round(x),Math.round(y),c);
 					}
-            
-        } // end for ellipsoids         
+			           
                 }
-                } // end for pixels
+                } // end for ellipsoids
+        } // end for pixels in ellipsoid
+        context.putImageData(imagedata, 0, 0);
+    } // end if ellipsoids found
 } // end draw rand pixels in input ellipsoids
-}
+
 
 // draw 2d projections read from the JSON file at class github
 function drawInputEllipsoidsUsingArcs(context) {
@@ -408,4 +409,3 @@ function main() {
     //drawInputEllipsoidsUsingArcs(context);
       // shows how to read input file, but not how to draw pixels
 }
-
