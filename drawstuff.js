@@ -344,12 +344,12 @@ function drawRandPixelsInInputEllipsoids(context) {
 						intercept = Vector.add(eye,intercept);
 					   var xIn = Math.round(w*intercept.x);
 					   var yIn = Math.round(h*intercept.y);
-				   	drawPixel(imagedata,Math.round(y),Math.round(x),c);
+				   	drawPixel(imagedata,Math.round(x),Math.round(y),c);
 					}
 			           
                 }
-                } // end for pixels in ellipsoid
-        } // end for ellipsoids
+                } // end for ellipsoids
+        } // end for pixels in ellipsoid
         context.putImageData(imagedata, 0, 0);
     } // end if ellipsoids found
 } // end draw rand pixels in input ellipsoids
