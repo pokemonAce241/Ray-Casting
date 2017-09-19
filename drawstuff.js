@@ -263,7 +263,7 @@ function drawRandPixelsInInputEllipsoids(context) {
         var ellipsoidXRadius = 0; // init ellipsoid x radius
         var ellipsoidYRadius = 0; // init ellipsoid y radius
         var ellipsoidZRadius = 0; // init ellipsoid z radius
-	var scale = 0;
+	
         var c = new Color(0,0,0,0); // init the ellipsoid color
         var n = inputEllipsoids.length; // the number of input ellipsoids
         var eye = new Vector(0.5,0.5,-0.5); //eye location
@@ -348,7 +348,7 @@ function drawRandPixelsInInputEllipsoids(context) {
 					   var yIn = Math.round(intercept.y*h);
 						
 					
-					   drawPixel(imagedata,Math.round(xIn),Math.round(yIn),c);
+					   drawPixel(imagedata,Math.round(x/xIn),Math.round(y/yIn),c);
 				   }
 			           
                 }
