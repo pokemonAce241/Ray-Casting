@@ -328,7 +328,24 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   
 				   var div = discriminant(A,B,C);	   
 				   if(div >=0){
-				   	
+				   	var t1 = positiveQuadratic(A,B,C);
+					var t2 = negativeQuadratic(A,B,C);
+					var closeT = 0;
+					if(t1 < t2){
+						closeT = t1;
+						if(closeT < 1)
+							closeT = t2;
+					}
+					else{
+						closeT = t2;
+						if(closeT <1)
+							closeT = t1;
+					}
+						var intercept = new Vector;
+						intercept = Vector.scale(closeT,D);
+						intercept = Vector.add(eye,intercept);
+						
+					
 					   drawPixel(imagedata,Math.round(x),Math.round(y),c);
 				   }
 			           
