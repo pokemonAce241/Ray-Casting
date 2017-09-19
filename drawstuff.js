@@ -326,8 +326,11 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   var div = discriminant(A,B,C);	   
 				   if(div >=0)
 				   {
-					var t1 = positiveQuadratic(2,2,2);
-					var t2 = negativeQuadratic(2,2,2);
+					var A = 2;
+					var B = -5;
+					var C = -3;
+					var t1 = positiveQuadratic(A,B,C);
+					var t2 = negativeQuadratic(A,B,C);
 					var closeT = 0;
 					if(t1 < t2){
 						closeT = t1;
