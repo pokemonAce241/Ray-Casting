@@ -350,9 +350,9 @@ for (var y=0; y<h; y++) {
             
         } // end for ellipsoids         
                 }
-                } // end for pi
+                } // end for pixels
 } // end draw rand pixels in input ellipsoids
-
+}
 
 // draw 2d projections read from the JSON file at class github
 function drawInputEllipsoidsUsingArcs(context) {
