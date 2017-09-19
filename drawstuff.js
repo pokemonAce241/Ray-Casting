@@ -326,7 +326,7 @@ for (var y=0; y<h; y++) {
 				   var C = C-1;
 				   
 				   var div = discriminant(A,B,C);	   
-				   f(div >=0){
+				   if(div >=0){
 				    var t1 = positiveQuadratic(A,B,C);
 					var t2 = negativeQuadratic(A,B,C);
 					var closeT = 0;
