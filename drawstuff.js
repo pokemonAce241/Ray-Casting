@@ -319,16 +319,13 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   //EminCdivA = Vector.normalize(EminCdivA);
 				   var A = Vector.dot(DdivA,DdivA);
 				   var B = Vector.dot(DdivA,EminCdivA);
-				   var B = B*2
+				   B = B*2;
 				   var C = Vector.dot(EminCdivA,EminCdivA);
-				   var C = C-1;
+				   C = C-1;
 				   
 				   var div = discriminant(A,B,C);	   
 				   if(div >=0)
 				   {
-					var A = 2;
-					var B = -5;
-					var C = -3;
 					var t1 = positiveQuadratic(A,B,C);
 					var t2 = negativeQuadratic(A,B,C);
 					var closeT = 0;
@@ -347,7 +344,7 @@ function drawRandPixelsInInputEllipsoids(context) {
 						intercept = Vector.add(eye,intercept);
 					   var xIn = Math.round(w*intercept.x);
 					   var yIn = Math.round(h*intercept.y);
-				   	drawPixel(imagedata,Math.round(x),Math.round(y),c);
+				   	drawPixel(imagedata,Math.round(xIn),Math.round(yIn),c);
 					}
 			           
                 }
