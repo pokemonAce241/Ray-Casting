@@ -273,8 +273,8 @@ function drawRandPixelsInInputEllipsoids(context) {
 
         // Loop over the ellipsoids, draw rand pixels in each
         
-            for (var t=0; t<1; t+(1/(h-1))) {
-                for(var s=0;s<1;s+(1/(w-1))){
+            for (var t=0; t<1; t+=(1/(h-1))) {
+                for(var s=0;s<1;s+=(1/(w-1))){
                    
 			
 				   var PLZ = LL.z +(t*(UL.z-LL.z));
