@@ -291,7 +291,7 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   var Py = PLY + (t*(PRY-PLY));
 				   
 				   var pixel = new Vector(Px,Py,Pz);
-	for (var e=0; e<1; e++) {
+	for (var e=0; e<n; e++) {
             cx = inputEllipsoids[e].x; // ellipsoid center x
             cy = inputEllipsoids[e].y; // ellipsoid center y
             cz = inputEllipsoids[e].z;// ellipsoid center z
