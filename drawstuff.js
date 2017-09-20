@@ -277,20 +277,20 @@ function drawRandPixelsInInputEllipsoids(context) {
                 for(var s=0;s<1;s+(1/(w-1))){
                    
 			
-				   var PLZ = UL.z +(s*(LL.z-UL.z));
-				   var PRZ = UR.z + (s*(LR.z-UR.z));
-				   var Pz = PLZ + (t*(PRZ-PLZ));
+				   var PLZ = LL.z +(t*(UL.z-LL.z));
+				   var PRZ = LR.z + (t*(UR.z-LR.z));
+				   var Pz = PLZ + (s*(PRZ-PLZ));
 				   
-				   var PLX = UL.x +(s*(LL.x-UL.x));
-				   var PRX = UR.x + (s*(LR.x-UR.x));
-				   var Px = PLX + (t*(PRX-PLX));
+				   var PLX = LL.x +(t*(UL.x-LL.x));
+				   var PRX = LR.x + (t*(UR.x-LR.x));
+				   var Px = PLX + (s*(PRX-PLX));
 				   
-				   var PLY = UL.y +(s*(LL.y-UL.y));
-				   var PRY = UR.y + (s*(LR.y-UR.y));
-				   var Py = PLY + (t*(PRY-PLY));
+				   var PLY = LL.y +(t*(UL.y-LL.y));
+				   var PRY = LR.y + (t*(UR.y-LR.y));
+				   var Py = PLY + (s*(PRY-PLY));
 				   
 				   var pixel = new Vector(Px,Py,Pz);
-	for (var e=0; e<n; e++) {
+	for (var e=0; e<1; e++) {
             cx = inputEllipsoids[e].x; // ellipsoid center x
             cy = inputEllipsoids[e].y; // ellipsoid center y
             cz = inputEllipsoids[e].z;// ellipsoid center z
