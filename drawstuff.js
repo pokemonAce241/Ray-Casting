@@ -116,7 +116,7 @@ class Vector {
             if (!(v1 instanceof Vector) || !(v2 instanceof Vector))
                 throw "Vector.add: non-vector parameter";
             else
-                return(new Vector(Math.round(v1.x/v2.x),Math.round(v1.y/v2.y),Math.round(v1.z/v2.z)));
+                return(new Vector(v1.x/v2.x,v1.y/v2.y,v1.z/v2.z));
         } // end try
         
         catch(e) {
