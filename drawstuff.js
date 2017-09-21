@@ -404,7 +404,8 @@ function drawInputEllipsoidsUsingArcs(context) {
 function main() {
 
     // Get the canvas and context
-    var canvas = document.getElementById("viewport"); 
+    var canvas = document.getElementById("viewport");
+	canvas = canvas.scale(1,-1);
     var context = canvas.getContext("2d")
  
     // Create the image
