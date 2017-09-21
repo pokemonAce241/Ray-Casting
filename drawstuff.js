@@ -253,8 +253,8 @@ function drawRandPixelsInInputEllipsoids(context) {
     const PIXEL_DENSITY = 0.05;
     var numCanvasPixels = (w*h)*PIXEL_DENSITY;
     var LL = new Vector(0,1,0);
-    var UL = new Vector(0,2,0);
-    var UR = new Vector(1,2,0);
+    var UL = new Vector(0,0,0);
+    var UR = new Vector(1,0,0);
     var LR = new Vector(1,1,0);
     
     if (inputEllipsoids != String.null) { 
