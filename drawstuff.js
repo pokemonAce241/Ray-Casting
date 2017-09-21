@@ -291,7 +291,7 @@ function drawRandPixelsInInputEllipsoids(context) {
 				   var Py = PLY + (t*(PRY-PLY));
 				   
 				   var pixel = new Vector(Px,Py,Pz);
-	for (var e=0; e<n; e++) {
+	for (var e=0; e<2; e++) {
             cx = inputEllipsoids[e].x; // ellipsoid center x
             cy = inputEllipsoids[e].y; // ellipsoid center y
             cz = inputEllipsoids[e].z;// ellipsoid center z
@@ -342,8 +342,8 @@ function drawRandPixelsInInputEllipsoids(context) {
 						var intercept = new Vector;
 						intercept = Vector.scale(closeT,D);
 						intercept = Vector.add(eye,intercept);
-					   var xIn = Math.round((w)*intercept.x);
-					   var yIn = Math.round((h)*intercept.y);
+					   var xIn = Math.round((x)*intercept.x);
+					   var yIn = Math.round((y)*intercept.y);
 				   	drawPixel(imagedata,Math.round(xIn),Math.round(yIn),c);
 					}
 					}
