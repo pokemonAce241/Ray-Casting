@@ -273,21 +273,22 @@ function drawRandPixelsInInputEllipsoids(context) {
 
         // Loop over the ellipsoids, draw rand pixels in each
         
-            for (var t=0; t<1; t+=(1/(h-1))) {
-                for(var s=0;s<1;s+=(1/(w-1))){
+            for (var x=0; x<w; x++) {
+                for(var y=0;y<h;y++){
                    
-			
-				   var PLZ = LL.z +(t*(UL.z-LL.z));
-				   var PRZ = LR.z + (t*(UR.z-LR.z));
-				   var Pz = PLZ + (s*(PRZ-PLZ));
+			var t = x/w; 
+			var s = y/h;
+				   var PLZ = UL.z +(s*(LL.z-UL.z));
+				   var PRZ = UR.z + (s*(LR.z-UR.z));
+				   var Pz = PLZ + (t*(PRZ-PLZ));
 				   
-				   var PLX = LL.x +(t*(UL.x-LL.x));
-				   var PRX = LR.x + (t*(UR.x-LR.x));
-				   var Px = PLX + (s*(PRX-PLX));
+				   var PLX = UL.x +(s*(LL.x-UL.x));
+				   var PRX = UR.x + (s*(LR.x-UR.x));
+				   var Px = PLX + (t*(PRX-PLX));
 				   
-				   var PLY = LL.y +(t*(UL.y-LL.y));
-				   var PRY = LR.y + (t*(UR.y-LR.y));
-				   var Py = PLY + (s*(PRY-PLY));
+				   var PLY = UL.y +(s*(LL.y-UL.y));
+				   var PRY = UR.y + (s*(LR.y-UR.y));
+				   var Py = PLY + (t*(PRY-PLY));
 				   
 				   var pixel = new Vector(Px,Py,Pz);
 	for (var e=0; e<n; e++) {
@@ -341,11 +342,8 @@ function drawRandPixelsInInputEllipsoids(context) {
 						var intercept = new Vector;
 						intercept = Vector.scale(closeT,D);
 						intercept = Vector.add(eye,intercept);
-					   var worldX = w;
-					   var worldY = h;
-					   var xIn = Math.round(worldX*intercept.x);
-					   var yIn = Math.round(worldY*intercept.y);
-					   
+					   var xIn = Math.round((w)*intercept.x);
+					   var yIn = Math.round((h)*intercept.y);
 				   	drawPixel(imagedata,Math.round(xIn),Math.round(yIn),c);
 					}
 					}
