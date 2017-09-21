@@ -341,10 +341,10 @@ function drawRandPixelsInInputEllipsoids(context) {
 						var intercept = new Vector;
 						intercept = Vector.scale(closeT,D);
 						intercept = Vector.add(eye,intercept);
-					   var worldX = (intercept.x+1)/2;
-					   var worldY = (1-intercept.y)/2;
-					   var xIn = Math.round(worldX*w);
-					   var yIn = Math.round(worldY*y);
+					   var worldX = w;
+					   var worldY = h;
+					   var xIn = Math.round(worldX*intercept.x);
+					   var yIn = Math.round(worldY*intercept.y);
 					   
 				   	drawPixel(imagedata,Math.round(xIn),Math.round(yIn),c);
 					}
