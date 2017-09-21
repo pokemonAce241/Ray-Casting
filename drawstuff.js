@@ -245,7 +245,6 @@ function getInputEllipsoids() {
 
 // put random points in the ellipsoids from the class github
 function drawRandPixelsInInputEllipsoids(context) {
-    context.scale(1, -1);
     var inputEllipsoids = getInputEllipsoids();
     var w = context.canvas.width;
     var h = context.canvas.height;
@@ -406,7 +405,7 @@ function main() {
 
     // Get the canvas and context
     var canvas = document.getElementById("viewport"); 
-    var context = canvas.getContext("2d");
+    var context = canvas.getContext("2d").scale(1,-1);
  
     // Create the image
     //drawRandPixels(context);
