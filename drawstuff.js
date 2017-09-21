@@ -331,12 +331,12 @@ function drawRandPixelsInInputEllipsoids(context) {
 					var closeT = 0;
 					if(t1 < t2){
 						closeT = t1;
-						if(closeT < 0)
+						if(closeT < 1)
 							closeT = t2;
 					}
 					else{
 						closeT = t2;
-						if(closeT <0)
+						if(closeT < 1)
 							closeT = t1;
 					}
 						var intercept = new Vector;
