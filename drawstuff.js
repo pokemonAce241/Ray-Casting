@@ -372,13 +372,17 @@ function drawRandPixelsInInputEllipsoids(context) {
 	var normal = normalV(center.x,center.y,center.z,radius.x,radius.y,radius.z,intercept.x,intercept.y,intercept.z);
 							normal = Vector.normalize(normal);
 							var NdotL = Vector.dot(lightDir,normal);
+							var spec = Vector.dot(normal,H);
+						        spec = Math.pow(spec,inputEllipsoids[e].n);
+							if(spec > 1)
+								spec = 1;
 							
 		
-		var colorR = (inputEllipsoids[e].ambient[0]*255 * lightCol.x) + (inputEllipsoids[e].diffuse[0]*255 *lightCol.x*NdotL  );
+var colorR = (inputEllipsoids[e].ambient[0]*255 * lightCol.x) + (inputEllipsoids[e].diffuse[0]*255 *lightCol.x*NdotL) + (inputEllipsoids[e].specular[0]*255 *lightCol.x*spec);
 		
-		var colorG = (inputEllipsoids[e].ambient[1]*255 * lightCol.y) + (inputEllipsoids[e].diffuse[1]*255 * lightCol.y*NdotL);
+var colorG = (inputEllipsoids[e].ambient[1]*255 * lightCol.y) + (inputEllipsoids[e].diffuse[1]*255 * lightCol.y*NdotL) + (inputEllipsoids[e].specular[1]*255 *lightCol.y*spec);
 							
-		var colorB = (inputEllipsoids[e].ambient[2]*255 * lightCol.z) + (inputEllipsoids[e].diffuse[2]*255 * lightCol.z*NdotL);
+var colorB = (inputEllipsoids[e].ambient[2]*255 * lightCol.z) + (inputEllipsoids[e].diffuse[2]*255 * lightCol.z*NdotL) + (inputEllipsoids[e].specular[2]*255 *lightCol.z*spec);
 							
 							c.change(
                 colorR,
