@@ -409,8 +409,9 @@ function main() {
     // Get the canvas and context
     var canvas = document.getElementById("viewport");
     var context = canvas.getContext("2d");
-	context.translate(0,canvas.height);
+	context.translate(0,context.canvas.height);
 	context.scale(1,-1);
+	
 
  
     // Create the image
