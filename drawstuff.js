@@ -359,6 +359,7 @@ function drawRandPixelsInInputEllipsoids(context) {
                 } // end for ellipsoids
         } // end for pixels in ellipsoid
         context.putImageData(imagedata, 0, 0);
+	context.scale(1,-1);
 	
     } // end if ellipsoids found
  // end draw rand pixels in input ellipsoids
@@ -409,7 +410,7 @@ function main() {
     // Get the canvas and context
     var canvas = document.getElementById("viewport");
     var context = canvas.getContext("2d");
-	context.scale(1,-1);
+	
 
  
     // Create the image
