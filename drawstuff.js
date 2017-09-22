@@ -367,8 +367,7 @@ function drawRandPixelsInInputEllipsoids(context) {
 
 // draw 2d projections read from the JSON file at class github
 function drawInputEllipsoidsUsingArcs(context) {
-	context.translate(0,context.canvas.height);
-	context.scale(1,-1);
+	
     var inputEllipsoids = getInputEllipsoids();
     
     
