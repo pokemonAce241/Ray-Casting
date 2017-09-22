@@ -359,6 +359,7 @@ function drawRandPixelsInInputEllipsoids(context) {
                 } // end for ellipsoids
         } // end for pixels in ellipsoid
         context.putImageData(imagedata, 0, 0);
+	context.scale(1,-1);
     } // end if ellipsoids found
  // end draw rand pixels in input ellipsoids
 
