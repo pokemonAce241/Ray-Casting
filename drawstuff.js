@@ -199,6 +199,19 @@ function discriminant(a,b,c) {
 
 }
 
+//returns normal vector
+function normalV(Xcen,Ycen,Zcen,Xax,Yax,Zax,intX,intY,intZ){
+
+var NormX = (2*(intX-Xcen))/(Math.pow(Xax,2));
+
+var NormY = (2*(intY-Ycen))/(Math.pow(Yax,2));
+
+var NormZ = (2*(intZ-Zcen))/(Math.pow(Zax,2));
+
+return(new Vector(NormX,NormY,NormZ));
+
+}
+
 // draw a pixel at x,y using color
 function drawPixel(imagedata,x,y,color) {
     try {
@@ -303,11 +316,7 @@ function drawRandPixelsInInputEllipsoids(context) {
             var center = new Vector(cx,cy,cz);
             var radius = new Vector(ellipsoidXRadius,ellipsoidYRadius,ellipsoidZRadius);
            
-            c.change(
-                inputEllipsoids[e].diffuse[0]*255,
-                inputEllipsoids[e].diffuse[1]*255,
-                inputEllipsoids[e].diffuse[2]*255,
-                255); // ellipsoid diffuse color
+            
 				   var D = new Vector();
 				   D = Vector.subtract(pixel,eye);
 				   //D = Vector.normalize(D);
@@ -351,6 +360,33 @@ function drawRandPixelsInInputEllipsoids(context) {
 					   var xIn = Math.round((w-1)*pixel.x);
 					   var yIn = Math.round((h-1)*pixel.y);
 					       yIn = h - yIn;
+							
+							
+		
+		                                        var lightDir = Vector.subtract(lightPos,intercept);
+							lightDir = Vector.normalize(lightDir);
+							var viewDir = Vector.subtract(eye,intercept);
+							viewDir = Vector.normalize(viewDir);
+							var H = Vector.add(lightDir,viewDir);
+							H = Vector.normalize(H);
+							var normal = normalV(1,2,1,1,2,3,1,1,1);
+							normal = Vector.normalize(normal);
+							var NdotL = Vector.dot(lightDir,normal);
+							
+		
+		var colorR = (inputEllipsoids[e].ambient[0]*255 * lightCol.x);
+		
+		var colorG = (inputEllipsoids[e].ambient[1]*255 * lightCol.y);
+							
+		var colorB = (inputEllipsoids[e].ambient[2]*255 * lightCol.z);
+							
+							c.change(
+                inputEllipsoids[e].diffuse[0]*255,
+                inputEllipsoids[e].diffuse[1]*255,
+                inputEllipsoids[e].diffuse[2]*255,
+                255); // ellipsoid diffuse color
+							
+							
 				   	drawPixel(imagedata,Math.round(xIn),Math.round(yIn),c);	
 						}
 					}
