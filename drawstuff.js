@@ -374,11 +374,11 @@ function drawRandPixelsInInputEllipsoids(context) {
 							var NdotL = Vector.dot(lightDir,normal);
 							
 		
-		var colorR = (inputEllipsoids[e].ambient[0]*255 * lightCol.x);
+		var colorR = (inputEllipsoids[e].ambient[0]*255 * lightCol.x) + (inputEllipsoids[e].diffuse[0]*255 *lightCol.x*NdotL  );
 		
-		var colorG = (inputEllipsoids[e].ambient[1]*255 * lightCol.y);
+		var colorG = (inputEllipsoids[e].ambient[1]*255 * lightCol.y) + (inputEllipsoids[e].diffuse[1]*255 * lightCol.y*NdotL);
 							
-		var colorB = (inputEllipsoids[e].ambient[2]*255 * lightCol.z);
+		var colorB = (inputEllipsoids[e].ambient[2]*255 * lightCol.z) + (inputEllipsoids[e].diffuse[2]*255 * lightCol.z*NdotL);
 							
 							c.change(
                 colorR,
